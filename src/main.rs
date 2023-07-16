@@ -1,14 +1,34 @@
 mod tiles;
 
-use tiles::{Suit, ToByte};
+use tiles::*;
 
 fn main() {
-    const MAX: u8 = 0b111111;
-    println!("{:#x}, {:#08b}, {:#}", MAX, MAX, MAX);
+    let tiles = get_all_tiles();
+
+    let hand = Suit::to_string(&tiles);
+    println!("{hand}");
+
+    for tile in tiles {
+        println!("{:08b} -> {:?}", tile.to_byte(), tile);
+    }
+}
+
+fn get_all_tiles() -> Vec<Suit> {
+    let mut vec = vec![];
 
     for suit in [Suit::Dots, Suit::Bamboo, Suit::Characters] {
         for i in 0..0xA {
-            println!("{:08b}: {:?}", suit(i).to_byte(), suit(i))
+            vec.push(suit(i));
         }
     }
+
+    for wind in [Wind::South, Wind::East, Wind::North, Wind::West] {
+        vec.push(Suit::Wind(wind));
+    }
+
+    for dragon in [Dragon::White, Dragon::Red, Dragon::Green] {
+        vec.push(Suit::Dragon(dragon));
+    }
+
+    vec
 }
