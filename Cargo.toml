@@ -1,8 +1,11 @@
 [package]
 name = "mahjong-tiles"
-version = "0.1.0"
+version = "0.0.1-alpha"
 edition = "2021"
-
+authors = ["Bea Boxler <bea@boxler.me>", "Alex Lovett"]
+exclude = ["/examples", "/.github"]
+repository = "https://github.com/BeesBoxler/mahjong-encoding"
+license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]

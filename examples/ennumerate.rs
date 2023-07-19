@@ -1,6 +1,4 @@
-mod tiles;
-
-use tiles::*;
+use mahjong_tiles::*;
 
 fn main() {
     let tiles = get_all_tiles();
