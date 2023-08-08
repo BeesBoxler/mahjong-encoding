@@ -4,10 +4,10 @@ fn main() {
     let tiles = get_all_tiles();
 
     let hand = Suit::to_string(&tiles);
-    //println!("{hand}");
+    println!("{hand}");
 
     for tile in &tiles {
-        //   println!("{:08b} -> {:?}", tile.to_byte(), tile);
+        println!("{:08b} -> {:?}", tile.to_byte(), tile);
     }
 
     let tiles = [
