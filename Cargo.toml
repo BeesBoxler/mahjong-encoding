@@ -1,6 +1,6 @@
 [package]
-name = "mahjong-tiles"
-version = "0.0.2-alpha"
+name = "mahjong-encoding"
+version = "0.0.3-alpha"
 edition = "2021"
 authors = ["Bea Boxler <bea@boxler.me>", "Alex Lovett"]
 exclude = ["/examples", "/.github"]

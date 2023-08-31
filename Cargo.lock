@@ -3,5 +3,5 @@
 version = 3
 
 [[package]]
-name = "mahjong-tiles"
-version = "0.0.2-alpha"
+name = "mahjong-encoding"
+version = "0.0.3-alpha"

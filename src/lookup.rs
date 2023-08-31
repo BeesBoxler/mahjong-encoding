@@ -132,5 +132,3 @@ pub const INDEX: [Option<Suit>; 123] = [
     Some(Suit::Characters(2)),
     Some(Suit::Characters(3)),
 ];
-
-

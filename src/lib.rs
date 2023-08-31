@@ -1,39 +1,91 @@
-#![allow(dead_code)]
+//! A library for handling mahjong tiles and suits and exporting in a plain text format
+//!
+//! Provides enums for each suit and each tile within that, any suit can then be
+//! exported in a plain text format or reimported from text. This is extra useful
+//! when transmitting over plain text formats such as email or sms.
+//!
+
+#![warn(missing_docs)]
+#![doc(html_logo_url = "https://boxler.me/img/red_reagon.jpg")]
 mod lookup;
 
 use lookup::{ALPHABET, INDEX};
 
+/// 数牌 _(suupai)_,
+/// used to define a tile
+/// 
+/// The Suit used to define a tile. A hand, for example should be a `Vec<Suit>`.
+/// Used in conjunction with [RED_FIVE], [Dragon] or [Wind].
+/// 
+/// ```rust
+/// let hand = vec![
+///     Suit::Dots(RED_FIVE),
+///     Suit::Dots(6u8),
+///     Suit::Dots(7u8),
+/// ];
+/// ```
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Suit {
+    /// 餅子 _(pinzu)_
     Dots(u8),
+    /// 索子 _(so-zu)_
     Bamboo(u8),
+    /// 萬子 _(manzu)_
     Characters(u8),
+    /// Wind, must contain a [Wind]
+    /// 風牌 _(fompai)_
     Wind(Wind),
+    /// Dragon, must contain a [Dragon]
+    /// 三元牌 _(sangempai)_
     Dragon(Dragon),
 }
 
+/// 三元牌 _(sangempai)_,
+/// Dragon honours, to be used as part of a suit 
+/// ```rust
+/// Suit::Dragon(Dragon::Green)
+/// ```
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Dragon {
+    /// 白 _(shiro)_
     White,
+    /// 中 _(chun)_
     Red,
+    /// 發 _(hatsu)_
     Green,
 }
 
+/// 風牌 _(fompai)_,
+/// Wind honours, to be used as part of a suit
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Wind {
+    /// 南 _(nan)_
     South,
+    /// 東 _(ton)_
     East,
+    /// 北 _(pei)_
     North,
+    /// 西 _(sha)_
     West,
 }
 
-pub const R5: u8 = 0xA;
+/// Red Five
+/// 赤牌 _(akapai)_
+pub const RED_FIVE: u8 = 0xA;
 
+/// Errors that can be thrown when converting from string -> tiles
 pub enum DecodeErr {
+    /// The character you used does not refer to a tile
     InvalidCharacter,
 }
 
+/// Defines what can be converted from `T` into a [u8]
 pub trait ToByte {
+    /// Converts from `T` into [u8]
+    /// 
+    /// ```
+    /// Suit::Dots(5u8).to_byte();
+    /// ```
     fn to_byte(&self) -> u8;
 }
 
@@ -73,6 +125,7 @@ impl ToByte for Dragon {
 }
 
 impl Suit {
+    /// Converts an array or vec of [Suit] into a plain text string
     pub fn to_string(hand: &[Suit]) -> String {
         String::from_utf8(
             hand.iter()
@@ -82,6 +135,11 @@ impl Suit {
         .unwrap()
     }
 
+    /// Converts from a plain text string into a hand. Can throw a [DecodeErr]
+    /// 
+    /// ```
+    /// Suit::from_string("yz0123UVWXXklm");
+    /// ```
     pub fn from_string(input: &str) -> Result<Vec<Suit>, DecodeErr> {
         input
             .as_bytes()
@@ -161,7 +219,7 @@ mod test {
         ];
         let input = Suit::from_string("yz0123UVWXXklm").ok().unwrap();
 
-        zip(tiles, input).for_each(|(a,b)| assert_eq!(a,b));
+        zip(tiles, input).for_each(|(a, b)| assert_eq!(a, b));
     }
 
     #[test]
