@@ -1,4 +1,4 @@
-use mahjong_tiles::*;
+use mahjong_encoding::*;
 
 fn main() {
     let tiles = get_all_tiles();

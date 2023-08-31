@@ -13,11 +13,12 @@ use lookup::{ALPHABET, INDEX};
 
 /// 数牌 _(suupai)_,
 /// used to define a tile
-/// 
+///
 /// The Suit used to define a tile. A hand, for example should be a `Vec<Suit>`.
 /// Used in conjunction with [RED_FIVE], [Dragon] or [Wind].
-/// 
+///
 /// ```rust
+/// # use mahjong_encoding::*;
 /// let hand = vec![
 ///     Suit::Dots(RED_FIVE),
 ///     Suit::Dots(6u8),
@@ -41,9 +42,10 @@ pub enum Suit {
 }
 
 /// 三元牌 _(sangempai)_,
-/// Dragon honours, to be used as part of a suit 
+/// Dragon honours, to be used as part of a suit
 /// ```rust
-/// Suit::Dragon(Dragon::Green)
+/// # use mahjong_encoding::*;
+/// Suit::Dragon(Dragon::Green);
 /// ```
 #[derive(Debug, Copy, Clone, PartialEq)]
 pub enum Dragon {
@@ -73,7 +75,7 @@ pub enum Wind {
 /// 赤牌 _(akapai)_
 pub const RED_FIVE: u8 = 0xA;
 
-/// Errors that can be thrown when converting from string -> tiles
+/// Errors that can be thrown when converting from [&str] -> [`Vec<Suit>`]
 pub enum DecodeErr {
     /// The character you used does not refer to a tile
     InvalidCharacter,
@@ -82,8 +84,9 @@ pub enum DecodeErr {
 /// Defines what can be converted from `T` into a [u8]
 pub trait ToByte {
     /// Converts from `T` into [u8]
-    /// 
+    ///
     /// ```
+    /// # use mahjong_encoding::*;
     /// Suit::Dots(5u8).to_byte();
     /// ```
     fn to_byte(&self) -> u8;
@@ -136,8 +139,9 @@ impl Suit {
     }
 
     /// Converts from a plain text string into a hand. Can throw a [DecodeErr]
-    /// 
+    ///
     /// ```
+    /// # use mahjong_encoding::*;
     /// Suit::from_string("yz0123UVWXXklm");
     /// ```
     pub fn from_string(input: &str) -> Result<Vec<Suit>, DecodeErr> {
